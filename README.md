@@ -19,9 +19,7 @@ R4 — Final verification point, receives only what survives both filters
 
 IP Addressing Plan
 ===================
-Link                     Subnet
-R1–R2                    10.12.1.0/30 (R1:.1, R2:.2)
-
-R2–R3                    10.23.1.0/30 (R2:.1, R3:.2)
-
-R3–R4                    10.34.1.0/30 (R3:.1, R4:.2)
+Link                Subnet
+R1–R2               10.12.1.0/30 (R1:.1, R2:.2)
+R2–R3               10.23.1.0/30 (R2:.1, R3:.2)
+R3–R4               10.34.1.0/30 (R3:.1, R4:.2)
