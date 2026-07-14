@@ -1,7 +1,6 @@
-# BGP Route Filtering Using
-===========================
 This Lab contains 4 routers to illustrate BGP route filtering using prefix-lists.
-AS 65100                      AS 65200                    AS 65300
+
+   AS 65100                      AS 65200                   AS 65300
   +--------+                    +--------+                  +--------+
   |   R1   |------------------- |   R2   |------------------|   R3   |
   +--------+    10.12.1.0/30    +--------+   10.23.1.0/30   +--------+
