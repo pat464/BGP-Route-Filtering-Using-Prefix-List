@@ -1,0 +1,21 @@
+Interface configuration
+=======================
+R4(config)#int fa0/0
+R4(config-if)#ip add 10.34.1.2 255.255.255.252
+R4(config-if)#no shut
+R4(config-if)#
+*Mar  1 00:10:41.203: %LINK-3-UPDOWN: Interface FastEthernet0/0, changed state t                                                                             o up
+*Mar  1 00:10:42.203: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                                                                             et0/0, changed state to up
+
+
+BGP configuration
+=================
+R4(config)#router bgp 65400
+R4(config-router)#neighbor 10.34.1.1 remote-as 65300
+R4(config-router)#address-family ipv4 unicast
+R4(config-router-af)#neighbor 10.
+*Mar  1 00:41:34.947: %BGP-5-ADJCHANGE: neighbor 10.34.1.1 Up
+% Incomplete command.
+
+R4(config-router-af)#neighbor 10.34.1.1 activate
+R4(config-router-af)#
