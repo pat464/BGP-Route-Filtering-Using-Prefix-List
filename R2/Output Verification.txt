@@ -1,0 +1,63 @@
+Confirm BGP Session Establishment
+=================================
+R2#sh ip bgp summary
+BGP router identifier 10.23.1.1, local AS number 65200
+BGP table version is 5, main routing table version 5
+4 network entries using 480 bytes of memory
+4 path entries using 208 bytes of memory
+2/1 BGP path/bestpath attribute entries using 248 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+Bitfield cache entries: current 1 (at peak 1) using 32 bytes of memory
+BGP using 992 total bytes of memory
+BGP activity 4/0 prefixes, 4/0 paths, scan interval 60 secs
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.12.1.1       4 65100      47      46        5    0    0 00:43:37        4
+10.23.1.2       4 65300      46      47        5    0    0 00:43:34        0
+R2#
+
+BGP Prefix
+===========
+#Confirming whether R2 has all 4 prefixes from R1 baseline, before applying its own filter.
+#Filters affect what is sent (outbound), not what is received.
+
+R2#sh ip bgp
+BGP table version is 5, local router ID is 10.23.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 172.16.10.0/24   10.12.1.1                0             0 65100 i
+*> 172.16.20.0/25   10.12.1.1                0             0 65100 i
+*> 172.16.20.128/26 10.12.1.1                0             0 65100 i
+*> 172.16.40.0/28   10.12.1.1                0             0 65100 i
+R2#
+
+====================================
+#Confirming what R2 advertises to R3.
+#This should be 3 prefixes: /24, /25 and /26
+
+R2#sh ip bgp neighbors 10.23.1.2 advertised-routes
+BGP table version is 5, local router ID is 10.23.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 172.16.10.0/24   10.12.1.1                0             0 65100 i
+*> 172.16.20.0/25   10.12.1.1                0             0 65100 i
+*> 172.16.20.128/26 10.12.1.1                0             0 65100 i
+
+Total number of prefixes 3
+
+
+Verify prefix-list match statistics
+====================================
+R2#show ip prefix-list detail PL-R2-OUT
+ip prefix-list PL-R2-OUT:
+   count: 1, range entries: 1, sequences: 5 - 5, refcount: 4
+   seq 5 permit 172.16.0.0/16 ge 24 le 26 (hit count: 3, refcount: 1)
+R2#

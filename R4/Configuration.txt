@@ -19,3 +19,5 @@ R4(config-router-af)#neighbor 10.
 
 R4(config-router-af)#neighbor 10.34.1.1 activate
 R4(config-router-af)#
+
+#No filtering done at R4 since its the verification endpoint, receiving whatever survives both upstream filters.

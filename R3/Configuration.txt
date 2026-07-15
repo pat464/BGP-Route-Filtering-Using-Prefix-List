@@ -13,8 +13,11 @@ R3(config-if)#
 *Mar  1 00:09:22.623: %LINK-3-UPDOWN: Interface FastEthernet0/1, changed state t                                                                             o up
 *Mar  1 00:09:23.623: %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthern                                                                             et0/1, changed state to up
 
-Second filter: permit only /24 exact
+Second filter: permit only /24 prefix
 ====================================
+#This prefix-list permits toward R4: only 172.16.10.0/24(the only /24 that survived R2 filter)
+#This blocks: 172.16.20.0/25, 172.16.20.128/26, 172.16.40.0/28 and  172.16.50.0/32 (both exist in R3's table via R2, but don't match le 24)
+
 R3(config)#ip prefix-list PL-R3-OUT seq 5 permit 172.16.0.0/16 ge 24 le 24
 
 

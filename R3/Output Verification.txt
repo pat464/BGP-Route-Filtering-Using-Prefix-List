@@ -1,0 +1,58 @@
+Confirm BGP Session Establishment
+=================================
+R3#sh ip bgp summary
+BGP router identifier 10.34.1.1, local AS number 65300
+BGP table version is 4, main routing table version 4
+3 network entries using 360 bytes of memory
+3 path entries using 156 bytes of memory
+2/1 BGP path/bestpath attribute entries using 248 bytes of memory
+1 BGP AS-PATH entries using 24 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+Bitfield cache entries: current 1 (at peak 1) using 32 bytes of memory
+BGP using 820 total bytes of memory
+BGP activity 3/0 prefixes, 3/0 paths, scan interval 60 secs
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.23.1.1       4 65200      48      47        4    0    0 00:44:07        3
+10.34.1.2       4 65400      47      48        4    0    0 00:44:08        0
+R3#
+
+BGP Prefix-list
+===============
+#Confirming R3 receives 3 prefixes
+
+R3#sh ip bgp
+BGP table version is 4, local router ID is 10.34.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 172.16.10.0/24   10.23.1.1                              0 65200 65100 i
+*> 172.16.20.0/25   10.23.1.1                              0 65200 65100 i
+*> 172.16.20.128/26 10.23.1.1                              0 65200 65100 i
+R3#
+
+========================
+#Confirming R3 advertises only a single /24 to R4.
+
+R3#sh ip bgp neighbors 10.34.1.2 advertised-routes
+BGP table version is 4, local router ID is 10.34.1.1
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> 172.16.10.0/24   10.23.1.1                              0 65200 65100 i
+
+Total number of prefixes 1
+
+
+Verify prefix-list match statistics
+====================================
+R3#show ip prefix-list detail PL-R3-OUT
+ip prefix-list PL-R3-OUT:
+   count: 1, range entries: 1, sequences: 5 - 5, refcount: 4
+   seq 5 permit 172.16.0.0/16 ge 24 le 24 (hit count: 1, refcount: 1)
+R3#
