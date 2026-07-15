@@ -28,7 +28,7 @@ R2(config-if)#
 
 First filter: Permit prefix /24 to /26
 =========================================
-#This permits prefixes toward R3: 172.16.10.0/24, 172.16.20.0/25 and 172.16.20.128/26
+#This permits prefixes: 172.16.10.0/24, 172.16.20.0/25 and 172.16.20.128/26 to R3.
 #This blocks: 172.16.40.0/28 and network 172.16.50.0/32 (both fall outside the le 26 boundary)
 
 R2(config)#ip prefix-list PL-R2-OUT seq 5 permit 172.16.0.0/16 ge 24 le 26
