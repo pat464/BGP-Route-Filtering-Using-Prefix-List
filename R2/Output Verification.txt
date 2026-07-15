@@ -56,6 +56,8 @@ Total number of prefixes 3
 
 Verify prefix-list match statistics
 ====================================
+#Checking the hit counters per sequence line.
+#This verifies whether the deny statement is actually being matched before the broader permit, versus being bypassed entirely.
 R2#show ip prefix-list detail PL-R2-OUT
 ip prefix-list PL-R2-OUT:
    count: 1, range entries: 1, sequences: 5 - 5, refcount: 4
